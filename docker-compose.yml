@@ -1,0 +1,36 @@
+
+services:
+  app:
+    build: .
+    container_name: mod_cont
+    ports:
+      - "9999:9999"
+    depends_on:
+      - mongodb
+      - redis
+    environment:
+      - MONGO_URL=mongodb://mongodb:27017
+      - REDIS_HOST=redis
+    volumes:
+      - ./app:/app
+    restart: always
+
+  mongodb:
+    image: mongo:6
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    restart: always
+
+  redis:
+    image: redis:7
+    container_name: redis
+    ports:
+      - "6379:6379"
+    restart: always
+
+volumes:
+  mongo_data:
+

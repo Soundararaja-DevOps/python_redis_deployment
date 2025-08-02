@@ -1,0 +1,106 @@
+{
+  "taskDefinitionArn": "arn:aws:ecs:us-east-1:487383300987:task-definition/ecs-python-test-td-16:3",
+  "containerDefinitions": [
+    {
+      "name": "ecs-python-test-td-16",
+      "image": "487383300987.dkr.ecr.us-east-1.amazonaws.com/python-test:latest",
+      "cpu": 256,
+      "memory": 256,
+      "links": [
+        "mongo",
+        "redis"
+      ],
+      "portMappings": [
+        {
+          "containerPort": 9999,
+          "hostPort": 9999,
+          "protocol": "tcp"
+        }
+      ],
+      "essential": true,
+      "environment": [
+        {
+          "name": "MONGO_URL",
+          "value": "mongodb://mongo:27017"
+        },
+        {
+          "name": "REDIS_URL",
+          "value": "redis://redis:6379"
+        }
+      ],
+      "mountPoints": [],
+      "volumesFrom": [],
+      "dependsOn": [
+        {
+          "containerName": "mongo",
+          "condition": "START"
+        },
+        {
+          "containerName": "redis",
+          "condition": "START"
+        }
+      ],
+      "systemControls": []
+    },
+    {
+      "name": "mongo",
+      "image": "mongo:4.4.1",
+      "cpu": 256,
+      "memory": 256,
+      "portMappings": [
+        {
+          "containerPort": 27017,
+          "hostPort": 27017,
+          "protocol": "tcp"
+        }
+      ],
+      "essential": false,
+      "environment": [],
+      "mountPoints": [],
+      "volumesFrom": [],
+      "systemControls": []
+    },
+    {
+      "name": "redis",
+      "image": "redis:7.2",
+      "cpu": 256,
+      "memory": 256,
+      "portMappings": [
+        {
+          "containerPort": 6379,
+          "hostPort": 6379,
+          "protocol": "tcp"
+        }
+      ],
+      "essential": false,
+      "environment": [],
+      "mountPoints": [],
+      "volumesFrom": [],
+      "systemControls": []
+    }
+  ],
+  "family": "ecs-python-test-td-16",
+  "networkMode": "bridge",
+  "revision": 3,
+  "volumes": [],
+  "status": "ACTIVE",
+  "requiresAttributes": [
+    {
+      "name": "com.amazonaws.ecs.capability.ecr-auth"
+    },
+    {
+      "name": "ecs.capability.container-ordering"
+    }
+  ],
+  "placementConstraints": [],
+  "compatibilities": [
+    "EXTERNAL",
+    "EC2"
+  ],
+  "requiresCompatibilities": [
+    "EC2"
+  ],
+  "registeredAt": "2025-07-29T13:51:10.028Z",
+  "registeredBy": "arn:aws:iam::487383300987:user/vijay@klizos.com",
+  "tags": []
+}
